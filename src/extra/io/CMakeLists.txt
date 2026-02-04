@@ -19,6 +19,9 @@ set(LIBRARY_HEADERS
 set(LIBRARY_INCLUDES
     "${ROOFER_INCLUDE_DIR}")
 
+# Add installed LASlib to CMake prefix path
+list(APPEND CMAKE_PREFIX_PATH "/usr/local/lib/cmake/LASlib")
+
 find_package(laslib CONFIG REQUIRED)
 find_package(nlohmann_json CONFIG REQUIRED)
 # GDAL
@@ -26,4 +29,5 @@ find_package(GDAL CONFIG REQUIRED)
 
 add_library("io" OBJECT ${LIBRARY_SOURCES} ${LIBRARY_HEADERS})
 target_include_directories("io" PUBLIC ${LIBRARY_INCLUDES})
+target_include_directories("io" PRIVATE /usr/include/laszip)
 target_link_libraries("io" PUBLIC GDAL::GDAL LASlib nlohmann_json::nlohmann_json)
